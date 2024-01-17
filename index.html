@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./main.css">
+    <title>JS DOM</title>
+</head>
+<body>
+    <div class="container">
+        <div class="task">
+            <h1>#1 Простой слайдер</h1>
+            <div class="slider-container">
+                <a href="#" id="left-link">←</a>
+                <div class="slider">
+                    <ul class="slider__list">
+                        <li class="slider__item">1</li>
+                        <li class="slider__item">2</li>
+                        <li class="slider__item">3</li>
+                        <li class="slider__item">4</li>
+                        <li class="slider__item">5</li>
+                        <li class="slider__item">6</li>
+                        <li class="slider__item">7</li>
+                        <li class="slider__item">8</li>
+                        <li class="slider__item">9</li>
+                    </ul>
+                </div>
+                <a href="#" id="right-link">→</a>
+            </div>
+        </div>
+        <div class="task">
+            <h1>#2 Модальное окно</h1>
+            <div class="modal">
+                <p class="modal__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores commodi delectus eos corporis amet, ratione quas minus cumque, totam necessitatibus, est voluptatum voluptatem fuga eaque cum vero ea fugiat beatae!</p>
+                <button id="modalBtn">Открыть</button>
+                <div class="overlay"></div>
+            </div>
+        </div>
+        <div class="task"></div>
+    </div>
+    <script>
+        var position = 0;
+
+        const sliderList = document.querySelector(".slider__list");
+        const leftLink = document.querySelector("#left-link");
+        const rightLink = document.querySelector("#right-link");
+
+        leftLink.addEventListener("click", (event) =>
+        {
+            event.preventDefault();
+
+            if (position != 0)
+            {
+                position -= 60;
+            }
+            sliderList.style.right = `${position}px`;
+        });
+
+        rightLink.addEventListener("click", (event) =>
+        {
+            event.preventDefault();
+
+            if (position != 360)
+            {
+                position += 60;
+            }
+            sliderList.style.right = `${position}px`;
+        });
+
+        const modalBtn = document.querySelector("#modalBtn");
+        const overlay = document.querySelector(".overlay");
+        
+        modalBtn.addEventListener("click", e =>
+        {
+            e.preventDefault();
+
+            modalWindow = document.createElement("div");
+            modalWindow.classList.add("modalWindow");
+            modalWindow.textContent = "Модальное окно!";
+
+            modalWindowClose = document.createElement("a");
+            modalWindowClose.classList.add("modalWindowClose");
+            modalWindowClose.textContent = "x";
+            modalWindowClose.addEventListener("click", closeModal);
+
+            modalWindow.appendChild(modalWindowClose);
+
+            overlay.appendChild(modalWindow);
+            overlay.style.display = "flex";
+
+            console.log(e.target);
+        });
+
+        overlay.addEventListener("click", closeModal);
+
+        function closeModal(e)
+        {
+            e.preventDefault();
+            modalWindow = document.querySelector(".modalWindow");
+
+            if (modalWindow != e.target) {
+                overlay.removeChild(modalWindow);
+                overlay.style.display = "none";
+            }
+        };
+
+    </script>
+</body>
+</html>
